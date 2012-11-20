@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ThreadedComments.Data.Entities.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ThreadedCommentsDataEntitiesStoreContainer">
+          <EntitySet Name="Board" EntityType="ThreadedComments.Data.Entities.Store.Board" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Comment" EntityType="ThreadedComments.Data.Entities.Store.Comment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Post" EntityType="ThreadedComments.Data.Entities.Store.Post" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Comment_BoardId__Board_BoardId" Association="ThreadedComments.Data.Entities.Store.FK_Comment_BoardId__Board_BoardId">
+            <End Role="Board" EntitySet="Board" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_CommentId__Comment_ParentCommentId" Association="ThreadedComments.Data.Entities.Store.FK_Comment_CommentId__Comment_ParentCommentId">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Comment1" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_PostId__Post_PostId" Association="ThreadedComments.Data.Entities.Store.FK_Comment_PostId__Post_PostId">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_BoardId__Board_BoardId" Association="ThreadedComments.Data.Entities.Store.FK_Post_BoardId__Board_BoardId">
+            <End Role="Board" EntitySet="Board" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="BoardId" />
+          </Key>
+          <Property Name="BoardId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+          <Property Name="ParentCommentId" Type="int" />
+          <Property Name="Body" Type="nvarchar" Nullable="false" />
+          <Property Name="AuthorName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="AuthorEmail" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CommentUtcDate" Type="datetime2" Nullable="false" />
+          <Property Name="SortOrder" Type="varchar" Nullable="false" MaxLength="7994" />
+          <Property Name="Indent" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="1024" />
+          <Property Name="Body" Type="nvarchar" />
+          <Property Name="AuthorName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="AuthorEmail" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PostUtcDate" Type="datetime2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_BoardId__Board_BoardId">
+          <End Role="Board" Type="ThreadedComments.Data.Entities.Store.Board" Multiplicity="1" />
+          <End Role="Comment" Type="ThreadedComments.Data.Entities.Store.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_CommentId__Comment_ParentCommentId">
+          <End Role="Comment" Type="ThreadedComments.Data.Entities.Store.Comment" Multiplicity="0..1" />
+          <End Role="Comment1" Type="ThreadedComments.Data.Entities.Store.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="Comment1">
+              <PropertyRef Name="ParentCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_PostId__Post_PostId">
+          <End Role="Post" Type="ThreadedComments.Data.Entities.Store.Post" Multiplicity="1" />
+          <End Role="Comment" Type="ThreadedComments.Data.Entities.Store.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_BoardId__Board_BoardId">
+          <End Role="Board" Type="ThreadedComments.Data.Entities.Store.Board" Multiplicity="1" />
+          <End Role="Post" Type="ThreadedComments.Data.Entities.Store.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ThreadedComments.Data.Entities" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ThreadedCommentsEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Boards" EntityType="ThreadedComments.Data.Entities.Board" />
+          <EntitySet Name="Comments" EntityType="ThreadedComments.Data.Entities.Comment" />
+          <EntitySet Name="Posts" EntityType="ThreadedComments.Data.Entities.Post" />
+          <AssociationSet Name="FK_Comment_BoardId__Board_BoardId" Association="ThreadedComments.Data.Entities.FK_Comment_BoardId__Board_BoardId">
+            <End Role="Board" EntitySet="Boards" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_BoardId__Board_BoardId" Association="ThreadedComments.Data.Entities.FK_Post_BoardId__Board_BoardId">
+            <End Role="Board" EntitySet="Boards" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_CommentId__Comment_ParentCommentId" Association="ThreadedComments.Data.Entities.FK_Comment_CommentId__Comment_ParentCommentId">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="Comment1" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_PostId__Post_PostId" Association="ThreadedComments.Data.Entities.FK_Comment_PostId__Post_PostId">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="BoardId" />
+          </Key>
+          <Property Name="BoardId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="512" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Posts" Relationship="ThreadedComments.Data.Entities.FK_Post_BoardId__Board_BoardId" FromRole="Board" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <Property Name="ParentCommentId" Type="Int32" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorEmail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CommentUtcDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SortOrder" Type="String" Nullable="false" MaxLength="7994" Unicode="false" FixedLength="false" />
+          <Property Name="Indent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Board" Relationship="ThreadedComments.Data.Entities.FK_Comment_BoardId__Board_BoardId" FromRole="Comment" ToRole="Board" />
+          <NavigationProperty Name="ParentComment" Relationship="ThreadedComments.Data.Entities.FK_Comment_CommentId__Comment_ParentCommentId" FromRole="Comment" ToRole="Comment1" />
+          <NavigationProperty Name="Post" Relationship="ThreadedComments.Data.Entities.FK_Comment_PostId__Post_PostId" FromRole="Comment" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="1024" Unicode="true" FixedLength="false" />
+          <Property Name="Body" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorEmail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PostUtcDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Board" Relationship="ThreadedComments.Data.Entities.FK_Post_BoardId__Board_BoardId" FromRole="Post" ToRole="Board" />
+          <NavigationProperty Name="Comments" Relationship="ThreadedComments.Data.Entities.FK_Comment_PostId__Post_PostId" FromRole="Post" ToRole="Comment" />
+        </EntityType>
+        <Association Name="FK_Comment_BoardId__Board_BoardId">
+          <End Role="Board" Type="ThreadedComments.Data.Entities.Board" Multiplicity="1" />
+          <End Role="Comment" Type="ThreadedComments.Data.Entities.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_BoardId__Board_BoardId">
+          <End Role="Board" Type="ThreadedComments.Data.Entities.Board" Multiplicity="1" />
+          <End Role="Post" Type="ThreadedComments.Data.Entities.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_CommentId__Comment_ParentCommentId">
+          <End Role="Comment" Type="ThreadedComments.Data.Entities.Comment" Multiplicity="0..1" />
+          <End Role="Comment1" Type="ThreadedComments.Data.Entities.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="Comment1">
+              <PropertyRef Name="ParentCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_PostId__Post_PostId">
+          <End Role="Post" Type="ThreadedComments.Data.Entities.Post" Multiplicity="1" />
+          <End Role="Comment" Type="ThreadedComments.Data.Entities.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ThreadedCommentsDataEntitiesStoreContainer" CdmEntityContainer="ThreadedCommentsEntities">
+          <EntitySetMapping Name="Boards">
+            <EntityTypeMapping TypeName="ThreadedComments.Data.Entities.Board">
+              <MappingFragment StoreEntitySet="Board">
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="ThreadedComments.Data.Entities.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="ParentCommentId" ColumnName="ParentCommentId" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="AuthorEmail" ColumnName="AuthorEmail" />
+                <ScalarProperty Name="CommentUtcDate" ColumnName="CommentUtcDate" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Indent" ColumnName="Indent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="ThreadedComments.Data.Entities.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="AuthorEmail" ColumnName="AuthorEmail" />
+                <ScalarProperty Name="PostUtcDate" ColumnName="PostUtcDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

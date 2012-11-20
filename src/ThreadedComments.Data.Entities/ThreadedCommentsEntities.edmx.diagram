@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11a7f3317c394c51bcb59c5c19abef18" Name="Diagram1">
+        <EntityTypeShape EntityType="ThreadedComments.Data.Entities.Board" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ThreadedComments.Data.Entities.Comment" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ThreadedComments.Data.Entities.Post" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <AssociationConnector Association="ThreadedComments.Data.Entities.FK_Comment_BoardId__Board_BoardId" ManuallyRouted="false" />
+        <AssociationConnector Association="ThreadedComments.Data.Entities.FK_Post_BoardId__Board_BoardId" ManuallyRouted="false" />
+        <AssociationConnector Association="ThreadedComments.Data.Entities.FK_Comment_CommentId__Comment_ParentCommentId" ManuallyRouted="false" />
+        <AssociationConnector Association="ThreadedComments.Data.Entities.FK_Comment_PostId__Post_PostId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
