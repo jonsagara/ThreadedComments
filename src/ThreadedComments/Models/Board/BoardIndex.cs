@@ -7,6 +7,7 @@ namespace ThreadedComments.Models.Board
 {
     public class BoardIndex
     {
+        public int BoardId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -17,6 +18,9 @@ namespace ThreadedComments.Models.Board
             public int PostId { get; set; }
             public string Title { get; set; }
             public string Body { get; set; }
+            public string AuthorName { get; set; }
+            public string AuthorEmail { get; set; }
+            public DateTime PostUtcDate { get; set; }
         }
     }
 }

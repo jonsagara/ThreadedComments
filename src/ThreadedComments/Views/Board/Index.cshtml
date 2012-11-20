@@ -6,12 +6,16 @@
 <h2>@Model.Name</h2>
 <h4>@Model.Description</h4>
 
+<div>
+    @Html.ActionLink("New Post", "NewPost", "Board", new RouteValueDictionary { { "id", @Model.BoardId } }, null)
+</div>
+
 @if (Model.Posts.Count > 0)
 {
     <ul>
         @foreach (var post in Model.Posts)
         {
-            <li>@Html.ActionLink(post.Title, "Comments", "Post", new RouteValueDictionary {{"id", post.PostId}}, null)</li>
+            <li>@Html.ActionLink(post.Title, "Index", "Post", new RouteValueDictionary {{"id", post.PostId}}, null) by @post.AuthorName at @post.PostUtcDate.ToLocalTime().ToString()</li>
         }
     </ul>
 }

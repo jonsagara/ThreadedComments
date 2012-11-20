@@ -1,0 +1,34 @@
+﻿@model ThreadedComments.Models.Post.PostNewComment
+@{
+    ViewBag.Title = "NewComment";
+}
+
+<h2>NewComment</h2>
+
+@using (Html.BeginForm("NewComment", "Post", null, FormMethod.Post, new Dictionary<string, object> {{"id", "newCommentForm"}}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.PostId)
+    @Html.HiddenFor(m => m.BoardId)
+    @Html.HiddenFor(m => m.ParentCommentId)
+    <div>
+        @Html.LabelFor(m => m.Body)
+        @Html.TextAreaFor(m => m.Body)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.AuthorName)
+        @Html.TextBoxFor(m => m.AuthorName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.AuthorEmail)
+        @Html.TextBoxFor(m => m.AuthorEmail)
+    </div>
+    
+    <input type="submit" value="Add Comment" />
+}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
