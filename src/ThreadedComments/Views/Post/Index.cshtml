@@ -19,6 +19,7 @@
     {
         <div>By: @comment.AuthorName at @comment.CommentUtcDate.ToLocalTime().ToString()</div>
         <div>@comment.Body</div>
+        <div>@Html.ActionLink("Reply", "NewComment", "Post", new RouteValueDictionary { { "id", @Model.PostId }, { "parentCommentId", comment.CommentId } }, null)</div>
     }
 }
 else
