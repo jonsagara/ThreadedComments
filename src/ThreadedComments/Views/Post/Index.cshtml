@@ -1,0 +1,23 @@
+﻿@model ThreadedComments.Models.Post.PostIndex
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>@Model.Title</h2>
+<h3>@Model.Body</h3>
+<h4>Posted by @Model.AuthorName (@Model.AuthorEmail) at @Model.PostUtcDate.ToLocalTime().ToString()</h4>
+
+<h2>Comments</h2>
+@if (Model.Comments.Count > 0)
+{
+    foreach (var comment in @Model.Comments)
+    {
+        <div>By: @comment.AuthorName (@comment.AuthorEmail) at @comment.CommentUtcDate.ToLocalTime().ToString()</div>
+        <div>@comment.Body</div>
+    }
+}
+else
+{
+    <div>There are no comments for this post. Make one!</div>
+}

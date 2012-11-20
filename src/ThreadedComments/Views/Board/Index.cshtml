@@ -1,0 +1,21 @@
+﻿@model ThreadedComments.Models.Board.BoardIndex
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.Name</h2>
+<h4>@Model.Description</h4>
+
+@if (Model.Posts.Count > 0)
+{
+    <ul>
+        @foreach (var post in Model.Posts)
+        {
+            <li>@Html.ActionLink(post.Title, "Comments", "Post", new RouteValueDictionary {{"id", post.PostId}}, null)</li>
+        }
+    </ul>
+}
+else
+{
+    <div>No posts in this board</div>
+}
