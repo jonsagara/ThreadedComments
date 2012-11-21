@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ThreadedComments.Data.Entities.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ThreadedComments.Data.Entities.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ThreadedCommentsDataEntitiesStoreContainer">
           <EntitySet Name="Board" EntityType="ThreadedComments.Data.Entities.Store.Board" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Comment" EntityType="ThreadedComments.Data.Entities.Store.Comment" store:Type="Tables" Schema="dbo" />
@@ -46,7 +46,7 @@
           <Property Name="AuthorName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="AuthorEmail" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="CommentUtcDate" Type="datetime2" Nullable="false" />
-          <Property Name="SortOrder" Type="varchar" Nullable="false" MaxLength="7994" />
+          <Property Name="SortOrder" Type="varchar" Nullable="false" />
           <Property Name="Indent" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Post">
@@ -109,8 +109,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ThreadedComments.Data.Entities" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -156,7 +155,7 @@
           <Property Name="AuthorName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="AuthorEmail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="CommentUtcDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="SortOrder" Type="String" Nullable="false" MaxLength="7994" Unicode="false" FixedLength="false" />
+          <Property Name="SortOrder" Type="String" Nullable="false" MaxLength="8000" Unicode="false" FixedLength="false" />
           <Property Name="Indent" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Board" Relationship="ThreadedComments.Data.Entities.FK_Comment_BoardId__Board_BoardId" FromRole="Comment" ToRole="Board" />
           <NavigationProperty Name="ParentComment" Relationship="ThreadedComments.Data.Entities.FK_Comment_CommentId__Comment_ParentCommentId" FromRole="Comment" ToRole="Comment1" />
